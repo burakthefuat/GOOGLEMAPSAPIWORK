@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google Maps API - FUAT K.</title>
+    <style>
+      /* Harita boyutunu ayarlayın */
+      #map {
+        height: 500px; /* Haritanın yüksekliği */
+        width: 100%; /* Haritanın genişliği */
+      }
+
+      /* Bilgi penceresi içeriği için stil */
+      .info-content {
+        font-family:  Arial, Helvetica, sans-serif;
+        line-height: 1;
+        color: rgb(0, 0, 0);
+      }
+
+      .info-title {
+
+        font-weight: bold;
+        font-size: 14px;
+      }
+
+      .info-link {
+        margin-top: 1px;
+      }
+
+      .info-link a {
+        text-decoration: none;
+        font-weight: bold;
+        color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>Google Maps API - ÇALIŞMASI - FUAT KIRAN</h3>
+    <div id="map"></div>
+
+    <script>
+      function initMap() {
+        // Haritanın merkezini ve zoom seviyesini ayarlayın
+        var mapOptions = {
+          center: { lat: 39.9334, lng: 32.8597 }, // Türkiye merkez koordinatları
+          zoom: 6
+        };
+
+        // Haritayı oluşturun
+        var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+        // İşaretçileri eklemek için müşteri konumlarını tanımlayın
+        37.91295387462453, 40.23733509679458
+        var locations = [
+
+          { lat: 40.990858227206566, lng: 29.029371391526276, title: 'İSTANBUL - KADIKÖY' },
+           
+          { lat: 40.99749899165784, lng: 28.850641773607535, title: 'İSTANBUL - BAHÇELİEVLER' },
+
+          { lat: 37.87730765659457, lng: 32.50372069981781, title: 'KONYA' },
+
+          { lat:  39.93117172298571, lng: 32.858880307297, title: 'ANKARA' },
+
+          { lat: 38.41917359494541, lng: 27.150426388581753, title: 'İZMİR' },
+           
+          { lat: 37.92357619824588, lng: 40.21039599537821, title: 'DİYARBAKIR' },
+           
+          { lat: 36.991395021283694, lng: 35.34120677389608, title: 'ADANA' },     
+          // Daha fazla konum ekleyin
+        ];
+
+        // İşaretçileri haritaya ekleyin
+        for (var i = 0; i < locations.length; i++) {
+          (function(location) {
+            var marker = new google.maps.Marker({
+              position: location,
+              map: map,
+              title: location.title
+            });
+
+            // Bilgi penceresi içeriği
+            var contentString = `
+              <div class="info-content">
+                <div class="info-title">${location.title}</div>
+                
+            `;
+
+            // Bilgi penceresini oluşturun
+            var infowindow = new google.maps.InfoWindow({
+              content: contentString
+            });
+
+            // İşaretçiye tıklama olayı ekleyin
+            marker.addListener('click', function() {
+              infowindow.open(map, marker);
+            });
+          })(locations[i]);
+          //KEY = KISMINA GOOGLE MAPS'DEN ALINAN API GIRILMELIDIR.
+        }
+      }
+    </script>
+    
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMGVYTU2iI4KVVhrWvkcw-39O3EAhlmcQ&callback=initMap"></script>
+  </body>
+</html>
